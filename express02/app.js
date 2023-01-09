@@ -10,11 +10,16 @@ const todo = [
 ]
 
 app.get('/', (req, res) => {
+  console.log(req.headers)
   res.send('<h1>This is Homepage</h1>')
 })
 
 app.get('/todo', (req, res) => {
   res.send(todo)
+})
+
+app.post('/todo', (req, res) => {
+  res.send('This is a post Method')
 })
 
 app.use((req, res)=> {

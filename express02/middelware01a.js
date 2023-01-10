@@ -8,15 +8,15 @@ app.get('/', (req, res, next) => {
   next()
 })
 
-app.use( (req, res, next) => {
+app.get('/', (req, res) => {
   console.log('Middleware no.2')
-  next()
+  // res.send('<h1>Welcome to Codecamp14</h1>')
 })
 
-app.use( (req, res) => {
-  console.log('Middleware no.3')
-  if(!res.headersSent)
-    res.send('<h1>sent from middleware 3</h1>')
+app.use((req, res)=> {
+  res.status(404).send({msg :"Path not found..."})
 })
 
 app.listen(8000, ()=>console.log('Server on 8000'))
+
+

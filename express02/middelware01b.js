@@ -15,8 +15,9 @@ app.use( (req, res, next) => {
 
 app.use( (req, res) => {
   console.log('Middleware no.3')
-  if(!res.headersSent)
-    res.send('<h1>sent from middleware 3</h1>')
 })
 
 app.listen(8000, ()=>console.log('Server on 8000'))
+
+
+

@@ -6,6 +6,16 @@ function getList() {
   return fs.readFile("./db/data.json").then(JSON.parse);
 }
 
+function addList(title) {
+  return getList().then((list) => {
+      list.push(title);
+      fs.writeFile("./db/data.json", JSON.stringify(list, null, 2));
+      return list;
+    })
+}
+
+app.use(express.json())
+
 app.get('/', (req, res) => {
   res.send({msg: 'Please use path /todo'})
 })
@@ -39,8 +49,19 @@ app.get('/todo/:idx', (req,res)=>{
   })
 })
 
+app.post('/todo', (req, res)=>{
+  let {title} = req.body
+  // console.log(req.body)
+  if(!title)
+    return res.status(400).json({msg: 'Please input a new title..'})
+  addList(title).then(list => {
+    res.status(200).json(list)
+  })
+})
+
 app.use((req, res)=> {
   res.status(404).send({msg : 'path not found'})
+  // res.sendStatus(404)
 })
 
 

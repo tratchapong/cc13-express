@@ -29,7 +29,7 @@ exports.searchTodo = ( req, res, next) => {
     if(!rs)
       return res.status(404).json({msg: 'not Found!!'})
     res.status(200).json(rs)
-  }) 
+  }).catch(next) 
 }
 
 exports.createTodo = (req, res, next) => {
@@ -38,7 +38,7 @@ exports.createTodo = (req, res, next) => {
     return res.status(400).json({msg: 'Please input a new title..'})
   db.addList(title).then(list => {
     res.status(200).json(list)
-  })
+  }).catch(next)
 }
 
 exports.editTodo = (req, res, next) => {
@@ -46,7 +46,7 @@ exports.editTodo = (req, res, next) => {
   let {title} = req.body
   db.editList(idx, title).then(list => {
     res.status(200).json(list)
-  })
+  }).catch(next)
 
 }
 

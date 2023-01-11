@@ -1,22 +1,18 @@
 const fs = require('fs/promises')
 const express = require('express')
-const app = express()
+const router = express.Router()
 
 function getList() {
   return fs.readFile("./db/data.json").then(JSON.parse);
 }
 
-app.get('/', (req, res) => {
-  res.send({msg: 'Please use path /todo'})
-})
-
-app.get('/todo', (req, res, next) => {
-  getList().then( todo=> {
+router.get('/', (req, res, next) => {
+    getList().then( todo=> {
     res.status(200).json(todo)
   }).catch( err => next(err))
 })
 
-app.get('/todo/:idx', (req,res, next)=>{
+router.get('/:idx', (req,res, next)=>{
   let  {idx} = req.params
   console.log(+idx)
   getList().then( todo=> {
@@ -29,14 +25,4 @@ app.get('/todo/:idx', (req,res, next)=>{
   }).catch(next)
 })
 
-
-app.use((req, res)=> {
-  res.status(404).send({msg : 'endpoint not found'})
-})
-
-app.use((err,req,res,next) => {
-  console.log(err)
-  res.status(err.statusCode || 500).json({err : err.message})
-})
-
-app.listen(8000, ()=> console.log('Server run on 8000...'))
+module.exports = router

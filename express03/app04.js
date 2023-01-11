@@ -1,3 +1,5 @@
+// Error Handling example
+
 const fs = require('fs/promises')
 const express = require('express')
 const app = express()

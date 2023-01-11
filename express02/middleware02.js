@@ -16,8 +16,12 @@ function logHeader2() {
   }
 }
 
-app.use(logHeader1)
-app.use(logHeader2())
+// app.use(logHeader1)
+// app.use(logHeader2())
+
+// app.use(logHeader1, logHeader2())
+
+app.use([logHeader1, logHeader2()])
 
 app.get('/', (req, res, next) => {
   res.send('<h1>Welcome to Codecamp13</h1>')

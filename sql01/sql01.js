@@ -10,6 +10,7 @@ const dbInfo = {
   database: 'cc13_shop'
 }
 
+const conn = mysql.createConnection(dbInfo)
 // mysql.createConnection(dbInfo)
 // .then(db => db.query('Select * from products'))
 // .then(([rows, field]) => {
@@ -21,7 +22,7 @@ let sql = `select p.name AS p_name, p.price AS p_price, c.name AS c_name
 from products p 
 join category c on p.cat_id = c.id`
 
-mysql.createConnection(dbInfo)
+conn
 .then(db => db.query(sql))
 .then(([rows, field]) => {
   console.log(rows)

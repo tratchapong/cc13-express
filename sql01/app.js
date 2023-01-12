@@ -1,14 +1,16 @@
-const express = require('express')
-const db = require('./db')
+const express = require("express");
+const db = require("./db");
 
-const app = express()
+const app = express();
 
-let sql = `
-Select *
-From products
-Where name like ?
-`
+app.get(["/search", "/find"], (req, res, next) => {
+  let { keyword } = req.query;
+  let sql = 'Select * From products Where name like ?'
+  db.runsql(sql,[`%${keyword}%`]).then(rows => {
+    console.log(rows)
+    res.json(rows)
+  })
+});
 
-db.runsql(sql,['%Excel%']).then( rows => {
-  console.log(rows)
-})
+
+app.listen(8000, () => console.log("Server on 8000"));

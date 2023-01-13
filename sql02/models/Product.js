@@ -2,12 +2,17 @@ const db = require('../utils/db')
 
 exports.findAll = () => {
   let sql = 'Select * from products'
-  return db.execute(sql).then(([rows])=> rows)
+  return db.execute(sql).then(([rs])=> rs)
 }
 
 exports.findById = (id) => {
   let sql = 'Select * from products where id = ?'
-  return db.execute(sql, [id]).then(([rows])=> rows)
+  return db.execute(sql, [id]).then(([rs])=> rs)
+}
+
+exports.findByName = (name) => {
+  let sql = 'Select * From products Where name Like ?'
+  return db.execute(sql, [`%${name}%`]).then(([rs])=> rs)
 }
 
 exports.create = (product) => {

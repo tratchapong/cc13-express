@@ -13,13 +13,22 @@ exports.getProduct = (req, res, next) => {
   }).catch(next)
 }
 
+exports.getByName = (req, res, next) => {
+  if(!req.query.keyword) 
+   return  next()
+  const {keyword} = req.query
+  Product.findByName(keyword).then(rows=> {
+    res.json(rows)
+  }).catch(next)
+}
+
 exports.createProduct = (req, res, next) => {
   let product = req.body
   Product.create(product).then(rs => {
     console.log(rs)
     if(rs.affectedRows)
       return res.json({id: rs.insertId,...product})
-    throw new Error('cannot Create this one')
+    throw new Error('cannot Create this data')
   }).catch(next)
 }
 

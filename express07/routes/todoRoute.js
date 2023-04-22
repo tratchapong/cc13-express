@@ -1,4 +1,4 @@
-const express = require('Express')
+const express = require('express')
 const todoController = require('../controllers/todoController')
 const router = express.Router()
 
